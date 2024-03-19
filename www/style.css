@@ -55,16 +55,17 @@ padding: 0;
 margin-top: 60px;
 }
 
-#task-list li
-{
-margin-bottom: 10px;
-margin-left: 50px;
-margin-right: 50px;
-padding: 10px;
-background-color: #FFFFFF;
-border-radius: 5px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-transition: background-color 0.3s;
+#task-list li {
+    width: 80%; /* Ajusta el ancho según sea necesario */
+    margin: 10px auto; /* Centra los elementos horizontalmente */
+    padding: 10px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    overflow: hidden; /* Controla el desbordamiento */
+    text-overflow: ellipsis; /* Trunca el texto si es demasiado largo */
+    white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
 }
 
 #task-list li.completed {
@@ -72,9 +73,6 @@ text-decoration: line-through;
 background-color: #41C86F;
 }
 
-#task-list li:hover {
-background-color: #f9f9f9;
-}
 
 /* Info Icon */
 #info-button {
@@ -102,3 +100,22 @@ background-color: #f9f9f9;
 	margin: 0;
   }
   
+/*Animacion*/
+  /* remove animatio */
+@keyframes slideOut {
+	to {
+	  transform: translateX(100%);
+	  opacity: 0;
+	}
+  }
+  
+  .slide-out {
+	animation: slideOut 2s ease-out forwards;
+  }
+
+  /* toggle animation */
+  .completed .task-content {
+    background-color: #41C86F;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 2s ease-in-out;
+}
