@@ -1,89 +1,126 @@
-body {
-font-family: Arial, sans-serif;
-margin: 0;
-padding: 0;
-background-color: #A5B4F7;
+body
+{
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #A5B4F7;
 }
 
-h1 {
-text-align: center;
-margin-top: 40px;
-color: black;
+h1
+{
+	text-align: center;
+	margin-top: 40px;
+	color: black;
 }
 
 #add-task-container
 {
-position: fixed;
-left: 15px;
-right: 15px;
-bottom: 15px;
-display: flex;
-align-items: center;
-justify-content: space-between;
+	position: fixed;
+	left: 15px;
+	right: 15px;
+	bottom: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
-#fab-add {
-width: 60px;
-height: 60px;
-border-radius: 50%;
-background-color: #4CAF50;
-color: white;
-font-size: 1.5em;
-border: none;
-cursor: pointer;
-transition: background-color 0.3s;
+#fab-add
+{
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #4CAF50;
+	color: white;
+	font-size: 1.5em;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
 
-#fab-add:hover {
-background-color: #45a049;
+#fab-add:hover
+{
+	background-color: #45a049;
 }
 
-#task-name {
-flex-grow: 1;
-height: 60px;
-margin-right: 15px;
-border: 2px solid #ccc;
-border-radius: 20px;
-padding: 10px;
-font-size: 1em;
+#task-name
+{
+	flex-grow: 1;
+	height: 60px;
+	margin-right: 15px;
+	border: 2px solid #ccc;
+	border-radius: 20px;
+	padding: 10px;
+	font-size: 1em;
 }
 
 #task-list
 {
-list-style-type: none;
-padding: 0;
-margin-top: 60px;
+	list-style-type: none;
+	padding: 0;
+	margin-top: 60px;
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
-#task-list li {
-    width: 80%; /* Ajusta el ancho según sea necesario */
-    margin: 10px auto; /* Centra los elementos horizontalmente */
+/* Estilos para la barra de desplazamiento */
+#task-list::-webkit-scrollbar
+{
+	width: 10px;
+}
+
+#task-list::-webkit-scrollbar-track
+{
+	background: #f1f1f1;
+}
+
+#task-list::-webkit-scrollbar-thumb
+{
+	background: #888;
+	border-radius: 5px;
+}
+
+#task-list::-webkit-scrollbar-thumb:hover
+{
+	background: #555;
+}
+/* FIN DE Estilos para la barra de desplazamiento */
+
+/* Estilos para las notas */
+#task-list li
+{
+    width: 80%;
+    margin: 10px auto;
     padding: 10px;
     background-color: #FFFFFF;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
-    overflow: hidden; /* Controla el desbordamiento */
-    text-overflow: ellipsis; /* Trunca el texto si es demasiado largo */
-    white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    user-select: none;
 }
 
-#task-list li.completed {
-text-decoration: line-through;
-background-color: #41C86F;
+#task-list li.completed
+{
+	text-decoration: line-through;
+	background-color: #41C86F;
 }
-
+/* FIN DE Estilos para las notas */
 
 /* Info Icon */
-#info-button {
+#info-button
+{
 	position: absolute;
 	top: 20px;
 	right: 20px;
 	cursor: pointer;
-  }
+}
   
   /* Estilos para el cuadro emergente de información */
-  .popup {
+.popup
+{
 	display: none;
 	position: fixed;
 	top: 50%;
@@ -94,27 +131,37 @@ background-color: #41C86F;
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+	width: 300px;
+}
   
-  .popup p {
+.popup p
+{
 	margin: 0;
-  }
-  
+}
+
+/* FIN DE info icon */
+
+
 /*Animacion*/
   /* remove animatio */
-@keyframes slideOut {
-	to {
-	  transform: translateX(100%);
-	  opacity: 0;
+@keyframes slideOut
+{
+	to
+	{
+		transform: translateX(100%);
+		opacity: 0;
 	}
-  }
+
+}
   
-  .slide-out {
+.slide-out
+{
 	animation: slideOut 2s ease-out forwards;
-  }
+}
 
   /* toggle animation */
-  .completed .task-content {
+.completed .task-content
+{
     background-color: #41C86F;
     clip-path: inset(0 100% 0 0);
     transition: clip-path 2s ease-in-out;
