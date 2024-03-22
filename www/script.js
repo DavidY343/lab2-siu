@@ -5,7 +5,7 @@ const loadTasks = async () =>
 {
 	try
 	{
-		const response = await fetch("/tasks.json", { method: "GET" });
+		const response = await fetch("/tasks/get", { method: "GET" });
 		if (!response.ok)
 		{
 			throw new Error("Failed to fetch tasks");
@@ -33,12 +33,10 @@ const add = async () =>
 		}
 		const lastTaskId = taskList.length > 0 ? taskList[taskList.length - 1].id : 0;
 		const newTask = { id: lastTaskId + 1, title: taskName, done: false };
-		console.log(taskList);
 		taskList.push(newTask);
-		console.log(taskList);
 		updateUI(taskList);
 		taskNameInput.value = "";
-		//await saveTasks();
+		await saveTasks();
 	}
 	catch (error)
 	{
@@ -57,7 +55,7 @@ const remove = async (taskId) =>
 		{
 			taskList.splice(index, 1);
 			updateUI(taskList);
-			//await saveTasks();
+			await saveTasks();
 		}
 	}
 	catch (error)
@@ -77,7 +75,7 @@ const toggleDone = async (taskId, taskElement) =>
 		{
             taskList[taskIndex].done = !taskList[taskIndex].done;
             updateUI(taskList);
-			//await saveTasks();
+			await saveTasks();
         }
     }
 	catch (error)
@@ -91,7 +89,7 @@ const saveTasks = async () =>
 {
 	try
 	{
-		const response = await fetch("/tasks.json",
+		const response = await fetch("/tasks/update",
 		{
 			method: "POST",
 			headers:

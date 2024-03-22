@@ -16,18 +16,20 @@ const serveStaticFile = async (file) =>
 }
 
 // Guardar las tareas en el archivo tasks.json
-const saveTasks = async (tasks) => {
-  // Convertir las tareas a formato JSON
-  const tasksJSON = JSON.stringify(tasks, null, 2); // null y 2 son opciones de espaciado para formatear legiblemente el JSON
-
-  // Escribir las tareas en el archivo tasks.json
-  fs.writeFile('tasks.json', tasksJSON, (err) => {
-      if (err) {
-          console.error('Error al guardar las tareas:', err);
-      } else {
-          console.log('Tareas guardadas correctamente en tasks.json');
-      }
-  });
+const saveTasks = async (tasks) =>
+{
+	const tasksJSON = JSON.stringify(tasks, null, 2);
+	fs.writeFile('tasks.json', tasksJSON, (err) =>
+	{
+		if (err)
+		{
+			console.error('Error al guardar las tareas:', err);
+		}
+		else
+		{
+			console.log('Tareas guardadas correctamente en tasks.json');
+		}
+	});
 };
 
 //enviar respuesta
@@ -61,7 +63,7 @@ const handleRequest = async (request, response) =>
 				content = await serveStaticFile("www/style.css");
 				contentType = "text/css";
 				break;
-			case "/tasks.json":
+			case "/tasks/get":
 				content = await serveStaticFile("tasks.json");
 				contentType = "application/json";
 				break;
@@ -71,24 +73,29 @@ const handleRequest = async (request, response) =>
 		}
 		sendResponse(response, content, contentType);
 	}
-	/*  else if (request.method === "POST" && url === "/tasks.json") {
-	console.log("Se recibió una solicitud POST en /tasks.json");
-	let body = '';
-	request.on('data', chunk => {
-		body += chunk.toString(); // convert Buffer to string
-	});
-	request.on('end', async () => {
-		try {
-			const tasks = JSON.parse(body);
-			await saveTasks(tasks);
-			sendResponse(response, "Tareas actualizadas correctamente", "text/plain");
-		} catch (error) {
-			console.error("Error updating tasks:", error);
-			response.writeHead(500, { "Content-Type": "text/plain" });
-			response.end("Error al actualizar las tareas");
-		}
-	});
-	}*/
+	else if (request.method === "POST" && url === "/tasks/update")
+	{
+		let body = '';
+		request.on('data', chunk =>
+		{
+			body += chunk.toString();
+		});
+		request.on('end', async () =>
+		{
+			try
+			{
+				const tasks = JSON.parse(body);
+				await saveTasks(tasks);
+				sendResponse(response, "Tareas actualizadas correctamente", "text/plain");
+			}
+			catch (error)
+			{
+				console.error("Error updating tasks:", error);
+				response.writeHead(500, { "Content-Type": "text/plain" });
+				response.end("Error al actualizar las tareas");
+			}
+		});
+	}
 	else
 	{
 		response.writeHead(405, {"Content-Type": "text/html"});
@@ -102,21 +109,3 @@ const server = http.createServer(handleRequest);
 server.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
-
-
-
-
-
-
-/*
-// Manejar la solicitud POST para actualizar la lista de tareas en el servidor
-app.post('/tasklist/update', async (req, res) => {
-  try {
-    const tasks = req.body; // Obtener la lista de tareas del cuerpo de la solicitud
-    await updateTasks(tasks); // Actualizar las tareas en el servidor
-    res.sendStatus(200); // Enviar una respuesta de estado OK al cliente
-  } catch (error) {
-    console.error('Error updating tasks on server:', error);
-    res.sendStatus(500); // Enviar una respuesta de estado Internal Server Error al cliente en caso de error
-  }
-});*/
