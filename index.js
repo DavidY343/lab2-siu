@@ -67,6 +67,10 @@ const handleRequest = async (request, response) =>
 				content = await serveStaticFile("tasks.json");
 				contentType = "application/json";
 				break;
+			case "/infoIcon/get":
+				content = await serveStaticFile("www/media/infoIcon.png");
+				contentType = "image/png";
+				break;
 			default: 
 				content = "Ruta no v&aacutelida\r\n";
 				contentType = "text/html";

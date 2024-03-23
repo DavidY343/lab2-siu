@@ -1,5 +1,31 @@
 let taskList = [];
 
+
+// Obtener la referencia del elemento de imagen
+const imgElement = document.getElementById("info-img");
+
+// Función asincrónica para obtener y establecer la imagen
+async function fetchAndSetImage()
+{
+    try {
+        const response = await fetch("/infoIcon/get", { method: "GET" });
+        if (!response.ok)
+		{
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const blob = await response.blob();
+        const imgUrl = URL.createObjectURL(blob);
+        imgElement.src = imgUrl;
+    } catch (error)
+	{
+        console.error('Error al obtener la imagen:', error);
+    }
+}
+
+// Llamar a la función para obtener y establecer la imagen
+fetchAndSetImage();
+
+
 // Esta funcion carga las tareas desde el servidor
 const loadTasks = async () =>
 {
